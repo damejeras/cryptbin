@@ -1,13 +1,26 @@
 <script>
     export let value = '';
+
+    let hints = [
+        "Your first name",
+        "Your last name",
+        "Your Slack handle",
+        "Your Github handle"
+    ];
+
+    const hintsJSON = localStorage.getItem('hints');
+    if (hintsJSON) {
+        const parsedHints = JSON.parse(hintsJSON);
+
+        hints = [...parsedHints, ...hints.filter(item => parsedHints.indexOf(item) === -1)];
+    }
 </script>
 
 <input list="hints" bind:value={value} placeholder="Password hint"/>
 <datalist id="hints">
-    <option>Your first name</option>
-    <option>Your last name</option>
-    <option>Your Slack handle</option>
-    <option>Your Github handle</option>
+    {#each hints as hint}
+        <option>{hint}</option>
+    {/each}
 </datalist>
 
 <style>

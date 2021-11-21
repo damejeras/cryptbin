@@ -7,7 +7,6 @@
 	import DecryptForm from "./components/DecryptForm.svelte";
 	import NotFound from "./components/NotFound.svelte";
 	import Notifications from "./components/Notifications.svelte";
-import { loop_guard } from "svelte/internal";
 
 	let component, parameters;
 
@@ -32,9 +31,16 @@ import { loop_guard } from "svelte/internal";
 	let notifs;
 </script>
 
+<a href="https://github.com/damejeras/cryptbin"><img src="/github_ribbon.svg" alt="github ribbon"/></a>
 <Notifications bind:this={notifs}></Notifications>
 <div class="layout container">
 	<header>
+		<nav>
+			<hgroup>
+				<h2>cryptbin</h2>
+				<h3>share secrets privately</h3>
+			</hgroup>
+		  </nav>
 	</header>
 	<main>
 		<div>
@@ -42,16 +48,25 @@ import { loop_guard } from "svelte/internal";
 		</div>
 	</main>
 	<footer>
-		<div style="text-align: center;">
+		<div style="text-align: center; padding: 1em 0;">
+			<small style="opacity: .5;">Messages are AES encrypted in browser and stored in server's RAM. After 3 unssuccesful password inputs, message will be deleted.</small>
 		</div>
 	</footer>
 </div>
 
 <style>
+	a {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
 	.layout {
 		display: flex;
 		height: 100vh;
 		flex-direction: column;
+	}
+	header {
+		padding-bottom: 1em;
 	}
 	main {
 		display: flex;

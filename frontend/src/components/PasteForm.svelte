@@ -36,6 +36,7 @@
             })
             .finally(() => {
                 encryptButton.setAttribute("aria-busy", "false");
+                updateStorage(hint);
             });
     }
 
@@ -55,7 +56,21 @@
         }, 2000);
     }
 
+    function updateStorage(hint) {
+        let hintsJSON = localStorage.getItem('hints');
+        if (!hintsJSON) {
+            localStorage.setItem('hints', JSON.stringify([hint]));
+            return;
+        }
+
+        let hints = JSON.parse(hintsJSON);
+        hints = [hint, ...hints.filter(item => item !== hint)];
+        localStorage.setItem('hints', JSON.stringify(hints));
+    }
+
     function reset() {
+        hint = "";
+        password = "";
         id = "";
         link = "";
     }
@@ -87,7 +102,7 @@
                 id="content"
                 name="content"
                 placeholder="Content to encrypt"
-                rows="8"
+                rows="6"
             />
         </label>
 

@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	maxDecryptAttempts = 5
+	maxDecryptAttempts = 3
 )
 
 type service struct {
