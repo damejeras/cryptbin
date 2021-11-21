@@ -14,11 +14,10 @@ import (
 )
 
 var (
-	port, rootDir string
+	rootDir string
 )
 
 func main() {
-	flag.StringVar(&port, "port", ":8000", "set server port")
 	flag.StringVar(&rootDir, "root", "frontend/public", "set SPA files root dir")
 
 	flag.Parse()
@@ -41,7 +40,7 @@ func main() {
 		spa.ServeHTTP(w, r)
 	})
 
-	log.Fatal(http.ListenAndServe(port, nil))
+	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), nil))
 }
 
 // spaHandler implements the http.Handler interface, so we can use it
