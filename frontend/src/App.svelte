@@ -49,7 +49,7 @@
 	</main>
 	<footer>
 		<div style="text-align: center; padding: 1em 0;">
-			<small style="opacity: .5;">Messages are AES encrypted in browser and stored in server's RAM. After 3 unssuccesful password inputs, message will be deleted.</small>
+			<small style="opacity: .5;">Messages are AES encrypted in browser and stored in server's RAM for 15 minutes. After 3 unssuccesful password inputs, message will be deleted.</small>
 		</div>
 	</footer>
 </div>
