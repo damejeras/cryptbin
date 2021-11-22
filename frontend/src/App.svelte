@@ -36,7 +36,7 @@
 <div class="layout container">
 	<header>
 		<nav>
-			<hgroup>
+			<hgroup style="margin: 1em 0;">
 				<h2>cryptbin</h2>
 				<h3>share secrets privately</h3>
 			</hgroup>
