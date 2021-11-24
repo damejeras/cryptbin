@@ -1,10 +1,13 @@
+import { PasswordEncoder } from "./encoder";
+
 export async function encrypt(content, password) {
-    const encoder = new TextEncoder();
+    const textEncoder = new TextEncoder();
+    const passwordEncoder = new PasswordEncoder(textEncoder);
     const salt = window.crypto.getRandomValues(new Uint8Array(16));
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const passwordKey = await window.crypto.subtle.importKey(
         "raw",
-        encoder.encode(password), { name: "PBKDF2" },
+        passwordEncoder.encode(password), { name: "PBKDF2" },
         false, ["deriveBits", "deriveKey"]
     );
     const aesKey = await window.crypto.subtle.deriveKey({
@@ -21,7 +24,7 @@ export async function encrypt(content, password) {
             iv: iv,
         },
         aesKey,
-        encoder.encode(content)
+        textEncoder.encode(content)
     );
 
     const encryptedContentArr = new Uint8Array(encryptedContent);

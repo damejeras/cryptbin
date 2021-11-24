@@ -3,6 +3,7 @@ package bin
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/damejeras/cryptbin/api"
@@ -58,7 +59,12 @@ func (s *service) SubmitPassword(ctx context.Context, req api.SubmitPasswordRequ
 		return nil, err
 	}
 
-	decrypted, err := crypt.Decrypt([]byte(t.Content), []byte(req.Password))
+	password, err := crypt.RemoveDiacritics(req.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	decrypted, err := crypt.Decrypt([]byte(t.Content), []byte(strings.ToLower(password)))
 	if err != nil {
 		if de, ok := err.(crypt.DecryptError); ok {
 			t.Attempts++
