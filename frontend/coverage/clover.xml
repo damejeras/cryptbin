@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1637862018466" clover="3.2.0">
+  <project timestamp="1637862018466" name="All files">
+    <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2" elements="6" coveredelements="4" complexity="0" loc="3" ncloc="3" packages="1" files="1" classes="1"/>
+    <file name="encoder.js" path="/Users/darius/Code/cryptbin/frontend/src/crypto/encoder.js">
+      <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

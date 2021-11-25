@@ -17,3 +17,7 @@ pack:
 	GOOS=linux GOARCH=amd64 go build -o cryptbin main.go
 	tar -czvf 'cryptbin.tar.gz' 'cryptbin' './frontend/public/'
 	rm cryptbin
+
+test:
+	go test ./...
+	cd frontend && npm run test

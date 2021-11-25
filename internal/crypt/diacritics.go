@@ -19,7 +19,7 @@ func (s set) Contains(r rune) bool {
 
 func RemoveDiacritics(input string) (string, error) {
 	result, _, err := transform.String(
-		transform.Chain(norm.NFD, runes.Remove(set{unicode.Mn}), norm.NFC),
+		transform.Chain(norm.NFD, runes.Remove(set{unicode.Mn})),
 		input,
 	)
 	if err != nil {
