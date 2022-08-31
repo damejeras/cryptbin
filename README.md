@@ -10,3 +10,5 @@
 * Messages can be burned after reading.
 
 [https://cryptbin.org]
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/dariusme)
