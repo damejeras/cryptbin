@@ -31,16 +31,21 @@
 	let notifs;
 </script>
 
-<a href="https://github.com/damejeras/cryptbin"><img src="/github_ribbon.svg" alt="github ribbon"/></a>
+<a id="forkme" style="position: absolute; right: 0; top: 0;" href="https://github.com/damejeras/cryptbin"><img src="/github_ribbon.svg" alt="github ribbon"/></a>
 <Notifications bind:this={notifs}></Notifications>
 <div class="layout container">
 	<header>
 		<nav>
-			<hgroup style="margin: 1em 0;">
+			<hgroup style="margin: auto 0;">
 				<h2>cryptbin</h2>
 				<h3>share secrets privately</h3>
 			</hgroup>
-		  </nav>
+			<hgroup style="margin: auto 0;">
+				<a href="https://buymeacoffee.com/dariusme">
+					<img style="height: 2em;" src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-1.svg" alt="Buy me a coffee" />
+				</a>
+			</hgroup>
+		</nav>
 	</header>
 	<main>
 		<div>
@@ -55,10 +60,13 @@
 </div>
 
 <style>
-	a {
-		position: absolute;
-		right: 0;
-		top: 0;
+	#forkme {
+		display: none;
+	}
+	@media (min-width: 576px) {
+		#forkme {
+			display: block;
+		}
 	}
 	.layout {
 		display: flex;
