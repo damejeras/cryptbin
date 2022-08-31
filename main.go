@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/damejeras/cryptbin/api"
 	"github.com/damejeras/cryptbin/internal/bin"
-	"github.com/pacedotdev/oto/otohttp"
+	"github.com/damejeras/ferry"
+	"github.com/go-chi/chi/v5"
 )
 
 var (
@@ -20,28 +20,34 @@ var (
 
 func main() {
 	flag.StringVar(&rootDir, "root", "frontend/public", "set SPA files root dir")
-
 	flag.Parse()
-
-	apiServer := otohttp.NewServer()
-	apiServer.Basepath = "/api/"
 
 	repository := bin.NewInMemoryRepository()
 	binService := bin.NewService(repository)
-	api.RegisterBinService(apiServer, binService)
+
+	v1bin := ferry.NewRouter()
+	v1bin.Register(
+		ferry.Procedure(binService.Find),
+		ferry.Procedure(binService.Paste),
+		ferry.Procedure(binService.SubmitPassword),
+	)
+
+	router := chi.NewRouter()
+	router.Mount("/api/v1/BinService", v1bin)
+	router.Handle("/api/v1", ferry.ServiceDiscovery(router))
 
 	spa := spaHandler{staticPath: rootDir, indexPath: "index.html"}
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if strings.HasPrefix(r.URL.Path, "/api/") {
-			apiServer.ServeHTTP(w, r)
 
-			return
-		}
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			if strings.HasPrefix(r.URL.Path, "/api/v1") {
+				router.ServeHTTP(w, r)
+				return
+			}
 
-		spa.ServeHTTP(w, r)
-	})
-
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), nil))
+			spa.ServeHTTP(w, r)
+		},
+	)))
 }
 
 // spaHandler implements the http.Handler interface, so we can use it

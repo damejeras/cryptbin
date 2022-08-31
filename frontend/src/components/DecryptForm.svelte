@@ -2,7 +2,7 @@
     export let parameters;
 
     import NotFound from "./NotFound.svelte";
-    import { BinService } from "../api/proto.gen";
+    import { BinService } from "../api/client";
 	import { createEventDispatcher } from 'svelte';
 
     const binService = new BinService();

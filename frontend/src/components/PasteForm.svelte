@@ -1,7 +1,7 @@
 <script>
     import PasswordHintField from "./PasswordHintField.svelte";
     import { encrypt } from "./../crypto/encrypt";
-    import { BinService } from "./../api/proto.gen";
+    import { BinService } from "./../api/client";
 
     const binService = new BinService();
 
@@ -20,9 +20,9 @@
             .then((encryptedValue) => {
                 binService
                     .paste({
-                        Hint: hint,
-                        EncryptedContent: encryptedValue,
-                        BurnOnRead: burnOnRead,
+                        hint: hint,
+                        encrypted_content: encryptedValue,
+                        burn_on_read: burnOnRead,
                     })
                     .then((response) => {
                         content = "";

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/damejeras/cryptbin/api"
+	v1 "github.com/damejeras/cryptbin/api/v1"
 	"github.com/damejeras/cryptbin/internal/crypt"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -20,20 +20,20 @@ type service struct {
 	repository TransferRepository
 }
 
-func NewService(repository TransferRepository) api.BinService {
+func NewService(repository TransferRepository) v1.BinService {
 	return &service{repository: repository}
 }
 
-func (s *service) Find(ctx context.Context, req api.FindRequest) (*api.FindResponse, error) {
+func (s *service) Find(ctx context.Context, req *v1.FindRequest) (*v1.FindResponse, error) {
 	t, err := s.repository.FindByID(req.ID)
 	if err != nil {
 		return nil, err
 	}
 
-	return &api.FindResponse{Hint: t.Hint, AttemptsLeft: t.Attempts, Error: ""}, nil
+	return &v1.FindResponse{Hint: t.Hint, AttemptsLeft: t.Attempts}, nil
 }
 
-func (s *service) Paste(ctx context.Context, req api.PasteRequest) (*api.PasteResponse, error) {
+func (s *service) Paste(ctx context.Context, req *v1.PasteRequest) (*v1.PasteResponse, error) {
 	t := Transfer{
 		ID:         uuid.NewString(),
 		Content:    req.EncryptedContent,
@@ -45,15 +45,13 @@ func (s *service) Paste(ctx context.Context, req api.PasteRequest) (*api.PasteRe
 		return nil, err
 	}
 
-	response := api.PasteResponse{
+	return &v1.PasteResponse{
 		ValidUntil: time.Now().Add(time.Hour).String(),
 		ID:         t.ID,
-	}
-
-	return &response, nil
+	}, nil
 }
 
-func (s *service) SubmitPassword(ctx context.Context, req api.SubmitPasswordRequest) (*api.SubmitPasswordResponse, error) {
+func (s *service) SubmitPassword(ctx context.Context, req *v1.SubmitPasswordRequest) (*v1.SubmitPasswordResponse, error) {
 	t, err := s.repository.FindByID(req.ID)
 	if err != nil {
 		return nil, err
@@ -94,7 +92,7 @@ func (s *service) SubmitPassword(ctx context.Context, req api.SubmitPasswordRequ
 		}
 	}
 
-	return &api.SubmitPasswordResponse{
+	return &v1.SubmitPasswordResponse{
 		Content: string(decrypted),
 	}, nil
 }
